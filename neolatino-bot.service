@@ -1,0 +1,19 @@
+# systemd service: keeps the bot running and starts it after a reboot.
+#   1. Change User and the two paths below to yours
+#   2. sudo cp neolatino-bot.service /etc/systemd/system/
+#   3. sudo systemctl daemon-reload && sudo systemctl enable --now neolatino-bot
+#   Logs: journalctl -u neolatino-bot -f
+[Unit]
+Description=Dictionario Neolatino Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=gleb
+WorkingDirectory=/home/gleb/neolatino-bot
+ExecStart=/home/gleb/neolatino-bot/.venv/bin/python3 bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
